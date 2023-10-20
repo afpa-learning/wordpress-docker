@@ -1,0 +1,15 @@
+services:
+  db:
+    image: mariadb:10.6.4-focal
+    environment:
+      - MARIADB_ROOT_PASSWORD=supersecretpassword
+    volumes:
+      - ./db/creation-script.sql:/docker-entrypoint-initdb.d/creation-script.sql
+    
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - db
